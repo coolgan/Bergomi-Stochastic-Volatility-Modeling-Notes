@@ -19,9 +19,14 @@
   var storage = null;
   try { storage = window.localStorage; } catch (err) { storage = null; }
 
+  var tocDrawerQuery = window.matchMedia
+    ? window.matchMedia('(max-width: 1180px) and (min-width: 861px)')
+    : null;
+
   function readStored(key) {
-    if (!storage) return false;
-    return storage.getItem(key) === '1';
+    if (!storage) return null;
+    var value = storage.getItem(key);
+    return value === null ? null : value === '1';
   }
 
   function writeStored(key, value) {
@@ -34,30 +39,45 @@
     button.setAttribute('aria-label', pressed ? shownLabel : hiddenLabel);
   }
 
-  function setSidebarCollapsed(collapsed) {
+  function setSidebarCollapsed(collapsed, persist) {
     document.body.classList.toggle('sidebar-collapsed', collapsed);
     setPressed(sidebarToggle, collapsed, '显示章节导航', '隐藏章节导航');
-    writeStored('bergomi.sidebarCollapsed', collapsed);
+    if (persist) writeStored('bergomi.sidebarCollapsed', collapsed);
   }
 
-  function setTocCollapsed(collapsed) {
+  function setTocCollapsed(collapsed, persist) {
     document.body.classList.toggle('toc-collapsed', collapsed);
     setPressed(tocToggle, collapsed, '显示本章目录', '隐藏本章目录');
-    writeStored('bergomi.tocCollapsed', collapsed);
+    if (persist) writeStored('bergomi.tocCollapsed', collapsed);
   }
 
-  setSidebarCollapsed(readStored('bergomi.sidebarCollapsed'));
-  setTocCollapsed(readStored('bergomi.tocCollapsed'));
+  var storedSidebar = readStored('bergomi.sidebarCollapsed');
+  var storedToc = readStored('bergomi.tocCollapsed');
+  setSidebarCollapsed(storedSidebar === null ? false : storedSidebar);
+  setTocCollapsed(storedToc === null ? !!(tocDrawerQuery && tocDrawerQuery.matches) : storedToc);
+
+  if (tocDrawerQuery) {
+    var onTocModeChange = function () {
+      if (readStored('bergomi.tocCollapsed') === null) {
+        setTocCollapsed(tocDrawerQuery.matches);
+      }
+    };
+    if (tocDrawerQuery.addEventListener) {
+      tocDrawerQuery.addEventListener('change', onTocModeChange);
+    } else if (tocDrawerQuery.addListener) {
+      tocDrawerQuery.addListener(onTocModeChange);
+    }
+  }
 
   if (sidebarToggle) {
     sidebarToggle.addEventListener('click', function () {
-      setSidebarCollapsed(!document.body.classList.contains('sidebar-collapsed'));
+      setSidebarCollapsed(!document.body.classList.contains('sidebar-collapsed'), true);
     });
   }
 
   if (tocToggle) {
     tocToggle.addEventListener('click', function () {
-      setTocCollapsed(!document.body.classList.contains('toc-collapsed'));
+      setTocCollapsed(!document.body.classList.contains('toc-collapsed'), true);
     });
   }
 
