@@ -4,7 +4,7 @@
 
 在线阅读：
 
-https://bergomi-stochastic-volatility-modelling-notes.pages.dev/
+https://bergomi-stochastic-volatility-modeling-notes.pages.dev/
 
 ## 项目简介
 
@@ -55,7 +55,7 @@ Bergomi 这本书的难点不在单个公式，而在一整套建模语言：为
 
 当前站点部署在 Cloudflare Pages：
 
-https://bergomi-stochastic-volatility-modelling-notes.pages.dev/
+https://bergomi-stochastic-volatility-modeling-notes.pages.dev/
 
 Cloudflare Pages 连接本仓库时，构建命令可以留空，输出目录使用仓库根目录即可。
 

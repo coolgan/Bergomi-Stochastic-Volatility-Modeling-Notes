@@ -13,6 +13,54 @@
   }
   if (overlay) overlay.addEventListener('click', closeNav);
 
+  // ---- Desktop reading layout toggles ----
+  var sidebarToggle = document.getElementById('sidebarToggle');
+  var tocToggle = document.getElementById('tocToggle');
+  var storage = null;
+  try { storage = window.localStorage; } catch (err) { storage = null; }
+
+  function readStored(key) {
+    if (!storage) return false;
+    return storage.getItem(key) === '1';
+  }
+
+  function writeStored(key, value) {
+    if (storage) storage.setItem(key, value ? '1' : '0');
+  }
+
+  function setPressed(button, pressed, shownLabel, hiddenLabel) {
+    if (!button) return;
+    button.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+    button.setAttribute('aria-label', pressed ? shownLabel : hiddenLabel);
+  }
+
+  function setSidebarCollapsed(collapsed) {
+    document.body.classList.toggle('sidebar-collapsed', collapsed);
+    setPressed(sidebarToggle, collapsed, '显示章节导航', '隐藏章节导航');
+    writeStored('bergomi.sidebarCollapsed', collapsed);
+  }
+
+  function setTocCollapsed(collapsed) {
+    document.body.classList.toggle('toc-collapsed', collapsed);
+    setPressed(tocToggle, collapsed, '显示本章目录', '隐藏本章目录');
+    writeStored('bergomi.tocCollapsed', collapsed);
+  }
+
+  setSidebarCollapsed(readStored('bergomi.sidebarCollapsed'));
+  setTocCollapsed(readStored('bergomi.tocCollapsed'));
+
+  if (sidebarToggle) {
+    sidebarToggle.addEventListener('click', function () {
+      setSidebarCollapsed(!document.body.classList.contains('sidebar-collapsed'));
+    });
+  }
+
+  if (tocToggle) {
+    tocToggle.addEventListener('click', function () {
+      setTocCollapsed(!document.body.classList.contains('toc-collapsed'));
+    });
+  }
+
   // ---- Sidebar filter ----
   var search = document.getElementById('navSearch');
   if (search) {
