@@ -1,6 +1,6 @@
 # Bergomi 随机波动率建模中文精读笔记
 
-这是 Lorenzo Bergomi《Stochastic Volatility Modeling》的中文精读笔记站点。笔记不是逐字翻译，而是按原书章节重写推导路线，补上公式之间的过渡、模型假设的含义，以及一些交易台视角下更容易忽略的风险管理问题。
+本项目为Lorenzo Bergomi《Stochastic Volatility Modeling》的中文学习笔记站点。笔记按原书章节重写推导路线，补上公式之间的过渡、模型假设的含义，以及一些交易台视角下更容易忽略的风险管理问题。
 
 在线阅读：
 
@@ -8,7 +8,7 @@ https://bergomi-stochastic-volatility-modeling-notes.pages.dev/
 
 ## 项目简介
 
-Bergomi 这本书的难点不在单个公式，而在一整套建模语言：为什么 Black-Scholes 可以作为 P&L 会计工具使用，局部波动率为什么能精确校准却给出不自然的动态，前向方差模型如何把 vol of vol、偏斜和期限结构拆开处理，混合模型又在什么条件下才不会产生 P&L 泄漏。
+Bergomi这本书着重讨论了以下问题：为什么 Black-Scholes 可以作为 P&L 会计工具使用？局部波动率为什么能精确校准却给出不自然的动态？前向方差模型如何把 vol of vol、偏斜和期限结构拆开处理？混合模型又在什么条件下才不会产生 P&L 泄漏？
 
 这些笔记围绕这些问题展开。每章保留原书的数学结构，同时尽量把以下几件事说清楚：
 
@@ -50,14 +50,6 @@ Bergomi 这本书的难点不在单个公式，而在一整套建模语言：为
 - `images/`：笔记中引用的图表。
 
 网页由 Markdown 笔记构建生成，数学公式在构建阶段用 KaTeX 渲染，图片和字体都随仓库一起发布，不依赖外部 CDN。
-
-## 部署
-
-当前站点部署在 Cloudflare Pages：
-
-https://bergomi-stochastic-volatility-modeling-notes.pages.dev/
-
-Cloudflare Pages 连接本仓库时，构建命令可以留空，输出目录使用仓库根目录即可。
 
 ## 说明
 
