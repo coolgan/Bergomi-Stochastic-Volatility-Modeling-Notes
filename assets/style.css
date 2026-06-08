@@ -248,6 +248,22 @@ a:hover { text-decoration: underline; }
   padding: 6px;
 }
 
+.download-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 8px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: #115e59;
+  font-weight: 700;
+}
+.download-link:hover {
+  background: #bff6ec;
+  text-decoration: none;
+}
+
 /* Tables. */
 .note table {
   border-collapse: collapse;
